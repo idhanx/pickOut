@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { studentsAPI, skillsAPI } from '../services/api';
-import { UserPlus, Trash2, Mail, Building, GraduationCap, X } from 'lucide-react';
+import { UserPlus, Trash2, Mail, GraduationCap } from 'lucide-react';
 
 function StudentManager() {
     const [students, setStudents] = useState([]);

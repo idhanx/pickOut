@@ -27,7 +27,7 @@ sleep 3
 # ---- Start Frontend ----
 echo "🎨  Starting React frontend on port 3000..."
 cd "$ROOT_DIR/Frontend"
-npx react-scripts start &
+npm start &
 FRONTEND_PID=$!
 
 echo ""

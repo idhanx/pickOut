@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { requirementsAPI, studentsAPI } from '../services/api';
-import { CheckCircle, XCircle, Search, User, FileCheck, ArrowRight } from 'lucide-react';
+import { CheckCircle, XCircle, Search, FileCheck, ArrowRight } from 'lucide-react';
 
 function EligibilityChecker() {
     const [students, setStudents] = useState([]);

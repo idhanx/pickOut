@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { requirementsAPI, studentsAPI, skillsAPI } from '../services/api';
-import { Plus, XCircle, Search, Briefcase, User, Info, CheckCircle } from 'lucide-react';
+import { Plus, XCircle, Search, Briefcase, User } from 'lucide-react';
 
 function RequirementManager() {
     const [requirements, setRequirements] = useState([]);

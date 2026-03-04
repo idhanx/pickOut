@@ -57,3 +57,4 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 >>>>>>> 2a8b5cb (Initial commit)
+Frontend/node_modules/
