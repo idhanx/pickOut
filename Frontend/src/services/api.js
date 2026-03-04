@@ -1,6 +1,5 @@
 const API_BASE_URL = 'http://localhost:7090/api';
 
-// Helper function to mimic Axios behavior using Fetch
 const request = async (method, endpoint, data = null) => {
     const config = {
         method,
@@ -16,20 +15,17 @@ const request = async (method, endpoint, data = null) => {
     try {
         const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
 
-        // Fetch doesn't throw on 4xx/5xx by default, so we check ok status
         if (!response.ok) {
             const errorText = await response.text();
             throw new Error(errorText || `HTTP error! status: ${response.status}`);
         }
 
-        // Handle empty responses (like from DELETE)
         const contentType = response.headers.get("content-type");
         let result = null;
         if (contentType && contentType.indexOf("application/json") !== -1) {
             result = await response.json();
         }
 
-        // Return object with 'data' property to match Axios interface
         return { data: result };
     } catch (error) {
         console.error('API Request Failed:', error);
@@ -37,12 +33,17 @@ const request = async (method, endpoint, data = null) => {
     }
 };
 
-// Internal API object to replace axios instance
 const api = {
     get: (url) => request('GET', url),
     post: (url, data) => request('POST', url, data),
     put: (url, data) => request('PUT', url, data),
     delete: (url) => request('DELETE', url),
+};
+
+// Auth API
+export const authAPI = {
+    login: (credentials) => api.post('/auth/login', credentials),
+    register: (userData) => api.post('/auth/register', userData),
 };
 
 // Skills API
