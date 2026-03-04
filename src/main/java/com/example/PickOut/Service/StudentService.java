@@ -2,6 +2,7 @@ package com.example.PickOut.Service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -72,6 +73,7 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
+    @Transactional
     public void deleteStudent(Long id) {
         Student student = getStudentById(id);
 

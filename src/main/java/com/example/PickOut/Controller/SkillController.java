@@ -2,6 +2,7 @@ package com.example.PickOut.Controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import com.example.PickOut.Model.*;
@@ -34,6 +35,7 @@ public class SkillController {
     }
 
     @DeleteMapping("/{id}")
+    @Transactional
     public ResponseEntity<String> delete(@PathVariable Long id) {
         Skill skill = skillRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Skill not found"));
