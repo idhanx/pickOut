@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import com.example.PickOut.Model.Skill;
-import com.example.PickOut.Repository.SkillRepository;
+import com.example.PickOut.Model.*;
+import com.example.PickOut.Repository.*;
 
 @RestController
 @RequestMapping("/api/skills")
@@ -14,6 +14,8 @@ import com.example.PickOut.Repository.SkillRepository;
 public class SkillController {
 
     private final SkillRepository skillRepository;
+    private final StudentRepository studentRepository;
+    private final RequirementsRepository requirementRepository;
 
     @PostMapping
     public ResponseEntity<Skill> create(@RequestBody Skill skill) {
@@ -33,6 +35,23 @@ public class SkillController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
+        Skill skill = skillRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Skill not found"));
+
+        // Remove skill from all students
+        for (Student student : studentRepository.findAll()) {
+            if (student.getSkills().remove(skill)) {
+                studentRepository.save(student);
+            }
+        }
+
+        // Remove skill from all requirements
+        for (Requirement req : requirementRepository.findAll()) {
+            if (req.getRequiredSkills().remove(skill)) {
+                requirementRepository.save(req);
+            }
+        }
+
         skillRepository.deleteById(id);
         return ResponseEntity.ok("Skill Deleted");
     }

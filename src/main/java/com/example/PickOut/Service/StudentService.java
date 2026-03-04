@@ -15,6 +15,7 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
     private final SkillRepository skillRepository;
+    private final RequirementsRepository requirementRepository;
 
     public Student createStudent(Student student) {
         // Link skills properly
@@ -72,6 +73,21 @@ public class StudentService {
     }
 
     public void deleteStudent(Long id) {
+        Student student = getStudentById(id);
+
+        // Delete all requirements posted by this student
+        List<Requirement> requirements = requirementRepository.findByStudentId(id);
+        for (Requirement req : requirements) {
+            req.getRequiredSkills().clear();
+            requirementRepository.save(req);
+            requirementRepository.delete(req);
+        }
+
+        // Clear student's own skills (join table entries)
+        student.getSkills().clear();
+        studentRepository.save(student);
+
+        // Now safe to delete
         studentRepository.deleteById(id);
     }
 }
