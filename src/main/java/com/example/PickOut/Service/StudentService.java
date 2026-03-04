@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 import com.example.PickOut.Model.*;
 import com.example.PickOut.Repository.*;
 
+import javax.persistence.EntityManager;
+
 @Service
 @RequiredArgsConstructor
 public class StudentService {
@@ -17,6 +19,7 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private final SkillRepository skillRepository;
     private final RequirementsRepository requirementRepository;
+    private final EntityManager entityManager;
 
     public Student createStudent(Student student) {
         // Link skills properly
@@ -77,19 +80,22 @@ public class StudentService {
     public void deleteStudent(Long id) {
         Student student = getStudentById(id);
 
-        // Delete all requirements posted by this student
+        // 1. Delete all requirements posted by this student
         List<Requirement> requirements = requirementRepository.findByStudentId(id);
         for (Requirement req : requirements) {
             req.getRequiredSkills().clear();
-            requirementRepository.save(req);
-            requirementRepository.delete(req);
         }
+        requirementRepository.saveAll(requirements);
+        requirementRepository.flush();
+        requirementRepository.deleteAll(requirements);
+        requirementRepository.flush();
 
-        // Clear student's own skills (join table entries)
+        // 2. Clear student's own skills (join table entries)
         student.getSkills().clear();
-        studentRepository.save(student);
+        studentRepository.saveAndFlush(student);
 
-        // Now safe to delete
+        // 3. Now safe to delete the student
         studentRepository.deleteById(id);
+        studentRepository.flush();
     }
 }
