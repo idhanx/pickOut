@@ -18,7 +18,7 @@ function EligibilityChecker() {
     const fetchStudents = async () => {
         try {
             const response = await studentsAPI.getAll();
-            setStudents(response.data);
+            setStudents(response.data || []);
         } catch (error) {
             console.error('Error fetching students:', error);
         }
@@ -27,7 +27,7 @@ function EligibilityChecker() {
     const fetchRequirements = async () => {
         try {
             const response = await requirementsAPI.getOpen();
-            setRequirements(response.data);
+            setRequirements(response.data || []);
         } catch (error) {
             console.error('Error fetching requirements:', error);
         }
@@ -59,7 +59,7 @@ function EligibilityChecker() {
 
         try {
             const response = await requirementsAPI.getEligibleRequirements(selectedStudent);
-            setEligibleRequirements(response.data);
+            setEligibleRequirements(response.data || []);
         } catch (error) {
             console.error('Error finding eligible requirements:', error);
             alert('Failed to find eligible requirements');

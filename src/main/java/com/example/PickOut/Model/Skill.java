@@ -1,6 +1,6 @@
 package com.example.PickOut.Model;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 @Entity

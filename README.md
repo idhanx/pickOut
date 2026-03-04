@@ -21,24 +21,46 @@ Developed by **Dhanush**, PickOut bridges the gap between raw student data and a
 
 ### Prerequisites
 
-- Node.js installed
+- **Java 11** (OpenJDK)
+- **Node.js** (v16+)
+- **PostgreSQL** running locally with a database named `requirement_finder`
 
-### Installation
+### Quick Start (Recommended)
 
-1. Navigate to the frontend directory:
-   ```bash
-   cd Frontend
-   ```
-2. Install the necessary dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the development server:
-   ```bash
-   npm start
-   ```
+Run both backend and frontend with a single command:
 
-The application will be available at `http://localhost:3000`.
+```bash
+./run.sh
+```
+
+This starts:
+- **Backend** → `http://localhost:7090` (Spring Boot + PostgreSQL)
+- **Frontend** → `http://localhost:3000` (React)
+
+Press `Ctrl+C` to stop both servers.
+
+### Manual Start
+
+**Backend (Spring Boot):**
+```bash
+./mvnw spring-boot:run
+```
+
+**Frontend (React):**
+```bash
+cd Frontend
+npx react-scripts start
+```
+
+### Database Configuration
+
+Update `src/main/resources/application.properties` with your PostgreSQL credentials:
+
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/requirement_finder
+spring.datasource.username=postgres
+spring.datasource.password=YourPasswordHere
+```
 
 ---
 *Built with passion by Dhanush.*

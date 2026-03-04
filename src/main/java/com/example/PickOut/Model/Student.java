@@ -1,6 +1,6 @@
 package com.example.PickOut.Model;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 import java.util.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
