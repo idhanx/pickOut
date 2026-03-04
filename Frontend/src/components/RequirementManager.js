@@ -23,7 +23,7 @@ function RequirementManager() {
     const fetchRequirements = async () => {
         try {
             const response = await requirementsAPI.getOpen();
-            setRequirements(response.data);
+            setRequirements(response.data || []);
         } catch (error) {
             console.error('Error fetching requirements:', error);
         }
@@ -32,7 +32,7 @@ function RequirementManager() {
     const fetchStudents = async () => {
         try {
             const response = await studentsAPI.getAll();
-            setStudents(response.data);
+            setStudents(response.data || []);
         } catch (error) {
             console.error('Error fetching students:', error);
         }
@@ -41,7 +41,7 @@ function RequirementManager() {
     const fetchSkills = async () => {
         try {
             const response = await skillsAPI.getAll();
-            setSkills(response.data);
+            setSkills(response.data || []);
         } catch (error) {
             console.error('Error fetching skills:', error);
         }
@@ -107,7 +107,7 @@ function RequirementManager() {
     const handleFindEligible = async (requirementId) => {
         try {
             const response = await requirementsAPI.getEligibleStudents(requirementId);
-            const eligible = response.data;
+            const eligible = response.data || [];
 
             if (eligible.length === 0) {
                 alert('No eligible students found for this requirement');

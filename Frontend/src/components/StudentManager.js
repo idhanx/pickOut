@@ -22,7 +22,7 @@ function StudentManager() {
     const fetchStudents = async () => {
         try {
             const response = await studentsAPI.getAll();
-            setStudents(response.data);
+            setStudents(response.data || []);
         } catch (error) {
             console.error('Error fetching students:', error);
         }
@@ -31,7 +31,7 @@ function StudentManager() {
     const fetchSkills = async () => {
         try {
             const response = await skillsAPI.getAll();
-            setSkills(response.data);
+            setSkills(response.data || []);
         } catch (error) {
             console.error('Error fetching skills:', error);
         }

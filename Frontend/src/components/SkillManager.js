@@ -14,7 +14,7 @@ function SkillManager() {
     const fetchSkills = async () => {
         try {
             const response = await skillsAPI.getAll();
-            setSkills(response.data);
+            setSkills(response.data || []);
         } catch (error) {
             console.error('Error fetching skills:', error);
             alert('Failed to fetch skills');
